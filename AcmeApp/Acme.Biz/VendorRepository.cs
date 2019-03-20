@@ -8,6 +8,9 @@ namespace Acme.Biz
 {
     public class VendorRepository
     {
+
+        private List<Vendor> vendors;
+
         /// <summary>
         /// Retrieve one vendor.
         /// </summary>
@@ -29,6 +32,27 @@ namespace Acme.Biz
             return vendor;
         }
 
+
+
+        public T RetrieveValue<T>(string sql, T defaultValue) where T : struct
+        {
+            // Call the database to retrieve the value
+            // If no value is returned, return the default value
+            T value = defaultValue;
+
+            return value;
+        }
+
+        public string RetrieveValue(string sql, string defaultValue)
+        {
+            // Call the database to retrieve the value
+            // If no value is returned, return the default value
+            string value = defaultValue;
+
+            return value;
+        }
+
+
         /// <summary>
         /// Save data for one vendor.
         /// </summary>
@@ -41,6 +65,74 @@ namespace Acme.Biz
             // Code that saves the vendor
 
             return success;
+        }
+
+        public List<Vendor> Retrieve()
+        {
+            if(vendors == null)
+            {
+                vendors = new List<Vendor>();
+
+                vendors.Add(new Vendor() { VendorId = 1, CompanyName="ABC Corp", Email="abc@abc.com"});
+                vendors.Add(new Vendor() { VendorId = 2, CompanyName = "XYZ Corp", Email = "xyz@xyz.com" });
+            }
+
+
+            for (int i = 0; i < vendors.Count; i++)
+            {
+                Console.WriteLine(vendors[i]);
+            }
+
+            //foreach (var vendor in vendors)
+            //{
+            //    Console.WriteLine(vendor);
+            //}            
+
+            return vendors;
+        }
+
+        /// <summary>
+        /// Retrieves all of the approved vendors
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string,Vendor> RetrieveWithKeys()
+        {
+            var vendors = new Dictionary<string, Vendor>()
+            {
+                {"ABC Corp", new Vendor() {VendorId=5, CompanyName = "ABC Corp", Email = "abc@abc.com"} },
+                {"XYZ Inc", new Vendor() {VendorId=8, CompanyName = "XYZ Corp", Email = "xyz@xyz.com"} },
+            };
+
+            //foreach (var companyName in vendors.Keys)
+            //{
+            //    Console.WriteLine(vendors[companyName]);
+            //}
+
+            //if (vendors.ContainsKey("XYZ"))
+            //{
+            //    Console.WriteLine(vendors["XYZ"]);
+            //}
+
+            //Vendor vendor;
+            //if (vendors.TryGetValue("XYZ", out vendor))
+            //{
+            //    Console.WriteLine(vendors);
+            //}
+
+
+            //foreach (var vendor in vendors.Values)
+            //{
+            //    Console.WriteLine(vendor);
+            //}
+
+            foreach (var element in vendors)
+            {
+                var vendor = element.Value;
+                var key = element.Key;
+                Console.WriteLine($"Key: {key} Value: {vendor}");
+            }
+
+            return vendors;
         }
     }
 }
